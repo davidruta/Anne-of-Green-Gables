@@ -935,22 +935,21 @@ const PLAYERS = {
   b: { name:"Maggie & Ella",chars:["GILBERT","PRISSY","MARILLA","GERTIE","JOSIE"], chip:"chip-b", hi:"mine-m", rev:"rev-m", qfill:"qfill-b", check:"qa-check-b", qt:"qt-b", qca:"qca-b", fill:"fill-m" }
 };
 
-
 // Character voice profiles: {pitch, rate, gender}
 const CHAR_VOICE = {
-  ANNE:    { pitch:1.1,  rate:0.95, female:true  },
-  GILBERT: { pitch:0.9,  rate:0.95, female:false },
-  MARILLA: { pitch:1.0,  rate:0.90, female:true  },
-  DIANA:   { pitch:1.1,  rate:0.95, female:true  },
-  JOSIE:   { pitch:1.15, rate:0.95, female:true  },
-  GERTIE:  { pitch:1.05, rate:0.95, female:true  },
-  PRISSY:  { pitch:1.1,  rate:0.95, female:true  },
-  TEACHER: { pitch:1.0,  rate:0.90, female:false },
-  RUBY:    { pitch:1.1,  rate:0.95, female:true  },
-  TILLIE:  { pitch:1.05, rate:0.95, female:true  },
-  MOODY:   { pitch:0.9,  rate:0.95, female:false },
-  TOMMY:   { pitch:0.9,  rate:0.95, female:false },
-  ALL:     { pitch:1.0,  rate:0.90, female:false },
+  ANNE:    { pitch:1.25, rate:1.05, female:true  },
+  GILBERT: { pitch:0.80, rate:1.00, female:false },
+  MARILLA: { pitch:0.95, rate:0.88, female:true  },
+  DIANA:   { pitch:1.28, rate:1.08, female:true  },
+  JOSIE:   { pitch:1.32, rate:1.12, female:true  },
+  GERTIE:  { pitch:1.18, rate:1.00, female:true  },
+  PRISSY:  { pitch:1.28, rate:1.05, female:true  },
+  TEACHER: { pitch:1.00, rate:0.93, female:false },
+  RUBY:    { pitch:1.22, rate:1.05, female:true  },
+  TILLIE:  { pitch:1.15, rate:1.00, female:true  },
+  MOODY:   { pitch:0.88, rate:0.98, female:false },
+  TOMMY:   { pitch:0.88, rate:1.00, female:false },
+  ALL:     { pitch:1.00, rate:0.95, female:false },
 };
 
 // ════════════════════════════════════════════
@@ -1312,56 +1311,11 @@ function updateQProgress() {
 // ════════════════════════════════════════════
 
 // ── Voice loading ──
-
-  function rhInitVoices() {
+function rhInitVoices() {
   if (!window.speechSynthesis) {
     document.getElementById('rhNoTts').style.display = 'block';
     return;
   }
-
-  function loadV() {
-    RH.voices = window.speechSynthesis.getVoices();
-
-    const enVoices = RH.voices.filter(v => v.lang.toLowerCase().startsWith('en'));
-
-    // Prefer higher-quality voices first
-    function pickVoice(gender) {
-      const preferredNames = [
-        "Google US English",
-        "Google UK English",
-        "Microsoft",
-        "Samantha",
-        "Victoria",
-        "Daniel",
-        "Karen",
-        "Moira",
-        "Tessa",
-        "Alex"
-      ];
-
-      // Try to match premium/common natural voices
-      for (let name of preferredNames) {
-        const found = enVoices.find(v =>
-          v.name.toLowerCase().includes(name.toLowerCase()) &&
-          (gender === "female"
-            ? !/daniel|alex|fred|albert|lee|arthur|oliver/i.test(v.name)
-            : true)
-        );
-        if (found) return found;
-      }
-
-      // Fallback: any English voice
-      return enVoices[0] || null;
-    }
-
-    RH.femaleVoice = pickVoice("female");
-    RH.maleVoice   = pickVoice("male");
-  }
-
-  loadV();
-  window.speechSynthesis.onvoiceschanged = loadV;
-}
-  
   function loadV() {
     RH.voices = window.speechSynthesis.getVoices();
     // Try to find distinct male/female English voices
