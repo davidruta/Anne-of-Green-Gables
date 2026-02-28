@@ -1312,11 +1312,56 @@ function updateQProgress() {
 // ════════════════════════════════════════════
 
 // ── Voice loading ──
-function rhInitVoices() {
+
+  function rhInitVoices() {
   if (!window.speechSynthesis) {
     document.getElementById('rhNoTts').style.display = 'block';
     return;
   }
+
+  function loadV() {
+    RH.voices = window.speechSynthesis.getVoices();
+
+    const enVoices = RH.voices.filter(v => v.lang.toLowerCase().startsWith('en'));
+
+    // Prefer higher-quality voices first
+    function pickVoice(gender) {
+      const preferredNames = [
+        "Google US English",
+        "Google UK English",
+        "Microsoft",
+        "Samantha",
+        "Victoria",
+        "Daniel",
+        "Karen",
+        "Moira",
+        "Tessa",
+        "Alex"
+      ];
+
+      // Try to match premium/common natural voices
+      for (let name of preferredNames) {
+        const found = enVoices.find(v =>
+          v.name.toLowerCase().includes(name.toLowerCase()) &&
+          (gender === "female"
+            ? !/daniel|alex|fred|albert|lee|arthur|oliver/i.test(v.name)
+            : true)
+        );
+        if (found) return found;
+      }
+
+      // Fallback: any English voice
+      return enVoices[0] || null;
+    }
+
+    RH.femaleVoice = pickVoice("female");
+    RH.maleVoice   = pickVoice("male");
+  }
+
+  loadV();
+  window.speechSynthesis.onvoiceschanged = loadV;
+}
+  
   function loadV() {
     RH.voices = window.speechSynthesis.getVoices();
     // Try to find distinct male/female English voices
