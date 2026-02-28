@@ -12,25 +12,28 @@
    TOKENS
 ═══════════════════════════════════════════ */
 :root {
-  --bg:          #0f1a14;
-  --surface:     #172010;
-  --surface2:    #1e2c17;
-  --border:      #2e4024;
-  --gold:        #c9993a;
-  --gold-light:  #e8c06a;
-  --cream:       #f0e8d4;
-  --muted:       #7a9068;
+  /* ── PEI pastoral palette — warm wood, meadow, parchment ── */
+  --bg:          #0e110a;   /* deep meadow at dusk */
+  --surface:     #161a0c;   /* farmhouse timber */
+  --surface2:    #1e2510;   /* sunlit leaf shadow */
+  --border:      #2e3c18;   /* hedgerow green */
+  --gold:        #c8903a;   /* harvest amber */
+  --gold-light:  #e2aa50;   /* ripe wheat */
+  --cream:       #f5e8cc;   /* old parchment letter */
+  --muted:       #7a8a52;   /* faded meadow sage */
 
-  --maggie:      #e8557a;
-  --maggie-soft: rgba(232,85,122,0.15);
-  --maggie-glow: rgba(232,85,122,0.35);
+  /* Anne's wild rose — warmer, dustier pink */
+  --maggie:      #d4607a;
+  --maggie-soft: rgba(212,96,122,0.15);
+  --maggie-glow: rgba(212,96,122,0.35);
 
-  --ella:        #5b9fd4;
-  --ella-soft:   rgba(91,159,212,0.15);
-  --ella-glow:   rgba(91,159,212,0.35);
+  /* PEI sky — cornflower blue */
+  --ella:        #5898c8;
+  --ella-soft:   rgba(88,152,200,0.15);
+  --ella-glow:   rgba(88,152,200,0.35);
 
-  --correct:     #4caf7d;
-  --wrong:       #e05c5c;
+  --correct:     #5ab87d;
+  --wrong:       #d85858;
 
   --radius:      14px;
   --radius-sm:   8px;
@@ -79,15 +82,22 @@ body {
   content: '';
   position: fixed; inset: 0;
   background:
-    radial-gradient(ellipse 60% 40% at 50% 0%, rgba(201,153,58,0.12) 0%, transparent 70%),
-    radial-gradient(ellipse 80% 50% at 50% 100%, rgba(15,26,20,0.8) 0%, transparent 70%);
+    radial-gradient(ellipse 70% 45% at 50% 0%, rgba(200,144,58,0.14) 0%, transparent 65%),
+    radial-gradient(ellipse 60% 40% at 20% 80%, rgba(212,96,122,0.06) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 40% at 80% 85%, rgba(88,152,200,0.06) 0%, transparent 60%);
   pointer-events: none;
 }
 .welcome-eyebrow {
   font-family: 'Lato', sans-serif; font-size: 0.7rem;
-  letter-spacing: 0.25em; text-transform: uppercase;
-  color: var(--gold); margin-bottom: 0.6rem;
+  letter-spacing: 0.28em; text-transform: uppercase;
+  color: var(--gold); margin-bottom: 0.5rem;
   animation: fadeUp 0.6s ease both;
+}
+/* Botanical SVG banner above title */
+.welcome-botanical {
+  width: 220px; height: 44px; margin: 0 auto 0.5rem;
+  animation: fadeUp 0.6s ease both;
+  opacity: 0.85;
 }
 .welcome-title {
   font-family: 'Cormorant Garamond', Georgia, serif;
@@ -97,19 +107,28 @@ body {
 }
 .welcome-title em {
   display: block; font-style: italic; font-weight: 400;
-  font-size: 0.55em; color: var(--gold-light);
-  letter-spacing: 0.05em; margin-top: 0.3em;
+  font-size: 0.52em; color: var(--gold-light);
+  letter-spacing: 0.06em; margin-top: 0.35em;
 }
+/* Ornamental divider — two short rules flanking a rosette */
 .welcome-divider {
-  width: 60px; height: 1px;
-  background: linear-gradient(90deg, transparent, var(--gold), transparent);
-  margin: 1.4rem auto;
+  display: flex; align-items: center; gap: 0.7rem;
+  margin: 1.2rem auto; width: fit-content;
   animation: fadeUp 0.6s 0.2s ease both;
 }
+.welcome-divider::before, .welcome-divider::after {
+  content: '';
+  display: block; width: 44px; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+}
+.welcome-divider-rose {
+  font-size: 0.85rem; color: var(--gold); opacity: 0.9;
+  line-height: 1;
+}
 .welcome-prompt {
-  font-size: 0.9rem; color: var(--muted);
-  letter-spacing: 0.08em; text-transform: uppercase;
-  margin-bottom: 1.6rem;
+  font-size: 0.85rem; color: var(--muted);
+  letter-spacing: 0.1em; text-transform: uppercase;
+  margin-bottom: 1.4rem;
   animation: fadeUp 0.6s 0.3s ease both;
 }
 .player-cards {
@@ -249,6 +268,35 @@ body {
 /* ═══════════════════════════════════════════
    FULL SCRIPT TAB
 ═══════════════════════════════════════════ */
+/* Scene-jump navigation bar */
+.scene-nav {
+  display: flex; gap: 0.35rem; overflow-x: auto; padding-bottom: 0.5rem;
+  margin-bottom: 0.7rem; flex-shrink: 0;
+  -webkit-overflow-scrolling: touch; scrollbar-width: none;
+}
+.scene-nav::-webkit-scrollbar { display: none; }
+.scene-nav-btn {
+  flex-shrink: 0; padding: 0.32rem 0.75rem;
+  background: var(--surface2); border: 1px solid var(--border);
+  border-radius: 20px; font-size: 0.62rem; font-weight: 700;
+  letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted);
+  cursor: pointer; white-space: nowrap; transition: all 0.18s;
+  -webkit-tap-highlight-color: transparent;
+}
+.scene-nav-btn:active, .scene-nav-btn:hover { border-color: var(--gold); color: var(--gold); }
+.scene-nav-btn.song-btn { border-color: rgba(200,144,58,0.3); color: rgba(200,144,58,0.7); }
+.scene-nav-btn.song-btn:active { color: var(--gold); border-color: var(--gold); }
+/* Back-to-top button */
+.script-top-btn {
+  position: sticky; bottom: 0.8rem; float: right; margin-right: 0; margin-top: 0.5rem;
+  width: 34px; height: 34px; border-radius: 50%;
+  background: var(--surface2); border: 1px solid var(--border);
+  font-size: 0.8rem; color: var(--muted); cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.18s; -webkit-tap-highlight-color: transparent;
+  z-index: 10;
+}
+.script-top-btn:active { border-color: var(--gold); color: var(--gold); }
 .legend-bar {
   display: flex; gap: 0.8rem; flex-wrap: wrap; align-items: center;
   padding: 0.6rem 0.9rem; background: var(--surface); border: 1px solid var(--border);
@@ -311,6 +359,13 @@ body {
 .card-cue-label { font-size: 0.62rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.35rem; }
 .card-cue-char  { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.2rem; }
 .card-cue-text  { font-family: 'Cormorant Garamond', serif; font-size: 1rem; line-height: 1.55; color: var(--muted); font-style: italic; }
+/* Multi-cue lines */
+.cue-lines      { display: flex; flex-direction: column; gap: 0.22rem; margin-top: 0.4rem; }
+.cue-line       { display: flex; gap: 0.45rem; align-items: flex-start; }
+.cue-line-char  { font-size: 0.62rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold); min-width: 52px; flex-shrink: 0; padding-top: 0.12rem; }
+.cue-line-text  { font-family: 'Cormorant Garamond', serif; font-size: 0.95rem; line-height: 1.5; color: var(--muted); font-style: italic; flex: 1; }
+.cue-line.cue-final { border-top: 1px solid var(--border); padding-top: 0.35rem; margin-top: 0.2rem; }
+.cue-line.cue-final .cue-line-text { color: var(--cream); font-style: italic; }
 .card-my-line   { padding: 1.1rem 1.1rem 1rem; flex: 1; }
 .card-my-char   { font-size: 0.65rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.4rem; }
 .card-my-text   { font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; line-height: 1.6; color: #fff; }
@@ -632,11 +687,69 @@ textarea.quiz-input:focus { border-color: var(--gold); }
 <!-- ════════════════ WELCOME ════════════════ -->
 <div class="screen" id="welcome">
   <p class="welcome-eyebrow">Junior Musical · Script Memorizer</p>
+
+  <!-- Botanical SVG: apple blossoms & leaves -->
+  <svg class="welcome-botanical" viewBox="0 0 220 44" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <!-- Left branch -->
+    <g opacity="0.9">
+      <path d="M8 38 Q18 28 30 32 Q20 22 28 16" stroke="#7a8a52" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+      <ellipse cx="18" cy="29" rx="6" ry="3.5" transform="rotate(-30 18 29)" fill="#4a6a28" opacity="0.7"/>
+      <ellipse cx="30" cy="20" rx="5.5" ry="3" transform="rotate(10 30 20)" fill="#4a6a28" opacity="0.7"/>
+      <!-- blossom 1 -->
+      <g transform="translate(8,36)">
+        <circle cx="0" cy="-3" r="2.2" fill="#d4607a" opacity="0.85"/>
+        <circle cx="2.8" cy="-1" r="2.2" fill="#d4607a" opacity="0.85"/>
+        <circle cx="1.5" cy="2" r="2.2" fill="#d4607a" opacity="0.85"/>
+        <circle cx="-1.5" cy="2" r="2.2" fill="#d4607a" opacity="0.85"/>
+        <circle cx="-2.8" cy="-1" r="2.2" fill="#d4607a" opacity="0.85"/>
+        <circle cx="0" cy="0" r="1.5" fill="#c8903a" opacity="0.9"/>
+      </g>
+      <!-- blossom 2 (smaller) -->
+      <g transform="translate(28,15)">
+        <circle cx="0" cy="-2" r="1.7" fill="#e2aa50" opacity="0.75"/>
+        <circle cx="2.2" cy="-0.8" r="1.7" fill="#e2aa50" opacity="0.75"/>
+        <circle cx="1.2" cy="1.6" r="1.7" fill="#e2aa50" opacity="0.75"/>
+        <circle cx="-1.2" cy="1.6" r="1.7" fill="#e2aa50" opacity="0.75"/>
+        <circle cx="-2.2" cy="-0.8" r="1.7" fill="#e2aa50" opacity="0.75"/>
+        <circle cx="0" cy="0" r="1.1" fill="#c8903a"/>
+      </g>
+    </g>
+    <!-- Centre ornament -->
+    <g transform="translate(110,22)">
+      <circle r="2" fill="#c8903a" opacity="0.9"/>
+      <circle r="4" fill="none" stroke="#c8903a" stroke-width="0.8" opacity="0.5"/>
+      <line x1="-7" y1="0" x2="7" y2="0" stroke="#c8903a" stroke-width="0.6" opacity="0.5"/>
+      <line x1="0" y1="-7" x2="0" y2="7" stroke="#c8903a" stroke-width="0.6" opacity="0.5"/>
+    </g>
+    <!-- Right branch (mirror) -->
+    <g opacity="0.9" transform="translate(220,0) scale(-1,1)">
+      <path d="M8 38 Q18 28 30 32 Q20 22 28 16" stroke="#7a8a52" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+      <ellipse cx="18" cy="29" rx="6" ry="3.5" transform="rotate(-30 18 29)" fill="#4a6a28" opacity="0.7"/>
+      <ellipse cx="30" cy="20" rx="5.5" ry="3" transform="rotate(10 30 20)" fill="#4a6a28" opacity="0.7"/>
+      <g transform="translate(8,36)">
+        <circle cx="0" cy="-3" r="2.2" fill="#d4607a" opacity="0.85"/>
+        <circle cx="2.8" cy="-1" r="2.2" fill="#d4607a" opacity="0.85"/>
+        <circle cx="1.5" cy="2" r="2.2" fill="#d4607a" opacity="0.85"/>
+        <circle cx="-1.5" cy="2" r="2.2" fill="#d4607a" opacity="0.85"/>
+        <circle cx="-2.8" cy="-1" r="2.2" fill="#d4607a" opacity="0.85"/>
+        <circle cx="0" cy="0" r="1.5" fill="#c8903a" opacity="0.9"/>
+      </g>
+      <g transform="translate(28,15)">
+        <circle cx="0" cy="-2" r="1.7" fill="#e2aa50" opacity="0.75"/>
+        <circle cx="2.2" cy="-0.8" r="1.7" fill="#e2aa50" opacity="0.75"/>
+        <circle cx="1.2" cy="1.6" r="1.7" fill="#e2aa50" opacity="0.75"/>
+        <circle cx="-1.2" cy="1.6" r="1.7" fill="#e2aa50" opacity="0.75"/>
+        <circle cx="-2.2" cy="-0.8" r="1.7" fill="#e2aa50" opacity="0.75"/>
+        <circle cx="0" cy="0" r="1.1" fill="#c8903a"/>
+      </g>
+    </g>
+  </svg>
+
   <h1 class="welcome-title">
     Anne of<br>Green Gables
     <em>Who's rehearsing today?</em>
   </h1>
-  <div class="welcome-divider"></div>
+  <div class="welcome-divider"><span class="welcome-divider-rose">✿</span></div>
   <p class="welcome-prompt">Select your name</p>
   <div class="player-cards">
     <!-- Maggie & Ella side by side -->
@@ -700,13 +813,15 @@ textarea.quiz-input:focus { border-color: var(--gold); }
 
     <!-- FULL SCRIPT -->
     <div class="panel active" id="p-script">
+      <div class="scene-nav" id="sceneNav"></div>
       <div class="legend-bar">
         <span>Your lines:</span>
         <span><span class="legend-dot" style="background:var(--maggie)"></span>Maggie</span>
         <span><span class="legend-dot" style="background:var(--ella)"></span>Ella</span>
-        <span><span class="legend-dot" style="background:rgba(201,153,58,0.5)"></span>Song</span>
+        <span><span class="legend-dot" style="background:rgba(200,144,58,0.5)"></span>Song</span>
       </div>
       <div id="scriptContent"></div>
+      <button class="script-top-btn" onclick="document.getElementById('p-script').scrollTop=0" title="Back to top">↑</button>
     </div>
 
     <!-- MY LINES -->
@@ -935,21 +1050,22 @@ const PLAYERS = {
   b: { name:"Maggie & Ella",chars:["GILBERT","PRISSY","MARILLA","GERTIE","JOSIE"], chip:"chip-b", hi:"mine-m", rev:"rev-m", qfill:"qfill-b", check:"qa-check-b", qt:"qt-b", qca:"qca-b", fill:"fill-m" }
 };
 
-// Character voice profiles: {pitch, rate, gender}
+// Character voice profiles — gentle pitch ranges (0.92–1.08) sound natural;
+// extreme values above 1.1 sound robotic. Differentiate primarily via rate.
 const CHAR_VOICE = {
-  ANNE:    { pitch:1.25, rate:1.05, female:true  },
-  GILBERT: { pitch:0.80, rate:1.00, female:false },
-  MARILLA: { pitch:0.95, rate:0.88, female:true  },
-  DIANA:   { pitch:1.28, rate:1.08, female:true  },
-  JOSIE:   { pitch:1.32, rate:1.12, female:true  },
-  GERTIE:  { pitch:1.18, rate:1.00, female:true  },
-  PRISSY:  { pitch:1.28, rate:1.05, female:true  },
-  TEACHER: { pitch:1.00, rate:0.93, female:false },
-  RUBY:    { pitch:1.22, rate:1.05, female:true  },
-  TILLIE:  { pitch:1.15, rate:1.00, female:true  },
-  MOODY:   { pitch:0.88, rate:0.98, female:false },
-  TOMMY:   { pitch:0.88, rate:1.00, female:false },
-  ALL:     { pitch:1.00, rate:0.95, female:false },
+  ANNE:    { pitch:1.06, rate:1.08, female:true  }, // bright, enthusiastic, talks fast
+  GILBERT: { pitch:0.94, rate:1.02, female:false }, // confident schoolboy, natural
+  MARILLA: { pitch:0.98, rate:0.82, female:true  }, // measured, stern, authoritative
+  DIANA:   { pitch:1.04, rate:0.97, female:true  }, // warm, friendly, gentle
+  JOSIE:   { pitch:1.07, rate:1.10, female:true  }, // quick, gossipy
+  GERTIE:  { pitch:1.04, rate:0.98, female:true  }, // matter-of-fact classmate
+  PRISSY:  { pitch:1.05, rate:1.00, female:true  }, // prim, proper
+  TEACHER: { pitch:0.96, rate:0.88, female:false }, // clear, authoritative
+  RUBY:    { pitch:1.03, rate:1.00, female:true  }, // gentle narrator
+  TILLIE:  { pitch:1.02, rate:1.00, female:true  }, // clear narrator
+  MOODY:   { pitch:0.93, rate:0.96, female:false }, // steady narrator
+  TOMMY:   { pitch:0.96, rate:1.03, female:false }, // typical schoolboy
+  ALL:     { pitch:1.00, rate:0.93, female:false },
 };
 
 // ════════════════════════════════════════════
@@ -1091,10 +1207,10 @@ function gotoTab(id) {
 // ════════════════════════════════════════════
 function renderScript() {
   const el = document.getElementById('scriptContent');
-  const p  = PLAYERS[CP];
   let h = '';
-  groupByScene().forEach(g => {
-    h += `<div class="scene-block"><div class="scene-pill"><span>${scenePillIcon(g.s)}</span>${esc(g.s)}</div>`;
+  groupByScene().forEach((g, gIdx) => {
+    h += `<div class="scene-block" id="scene-block-${gIdx}">`;
+    h += `<div class="scene-pill"><span>${scenePillIcon(g.s)}</span>${esc(g.s)}</div>`;
     g.lines.forEach(l => {
       const mine = isMine(l);
       let cls = 'line-row';
@@ -1112,6 +1228,26 @@ function renderScript() {
     h += '</div>';
   });
   el.innerHTML = h;
+  buildScriptNav();
+}
+
+function buildScriptNav() {
+  const nav = document.getElementById('sceneNav');
+  if (!nav) return;
+  const scenes = groupByScene();
+  nav.innerHTML = scenes.map((g, i) => {
+    const short = g.s.replace(/^(Scene \d+: |Song: )/, '');
+    const isSong = g.s.toLowerCase().includes('song');
+    return `<button class="scene-nav-btn${isSong ? ' song-btn' : ''}" onclick="scrollToScene(${i})">${isSong ? '♪ ' : ''}${esc(short)}</button>`;
+  }).join('');
+}
+
+function scrollToScene(idx) {
+  const block = document.getElementById('scene-block-' + idx);
+  const panel = document.getElementById('p-script');
+  if (block && panel) {
+    panel.scrollTo({ top: block.offsetTop - 8, behavior: 'smooth' });
+  }
 }
 
 // ════════════════════════════════════════════
@@ -1124,7 +1260,6 @@ function buildMyLines() {
 }
 function renderCard() {
   const el = document.getElementById('lineCardArea');
-  const p  = PLAYERS[CP];
   if (!myLinesList.length) { el.innerHTML = '<div class="empty">No lines found.</div>'; return; }
 
   document.getElementById('cardCounter').textContent = `${cardIdx+1} of ${myLinesList.length}`;
@@ -1134,12 +1269,31 @@ function renderCard() {
   const l = myLinesList[cardIdx];
   document.getElementById('cardScene').textContent = l.s;
 
-  let cue = null;
-  for (let j = l._i-1; j >= 0; j--) { if (!SCRIPT[j].dir){ cue = SCRIPT[j]; break; } }
+  // Collect up to 5 preceding non-direction lines as cue context
+  const cues = [];
+  for (let j = l._i - 1; j >= 0 && cues.length < 5; j--) {
+    if (!SCRIPT[j].dir) cues.unshift(SCRIPT[j]);
+  }
 
-  const cueHTML = cue
-    ? `<div class="card-cue"><div class="card-cue-label">Your cue</div><div class="card-cue-char">${esc(cue.c)}</div><div class="card-cue-text">${nl2br(cue.t)}</div></div>`
-    : `<div class="card-cue"><div class="card-cue-label">First line — no cue</div></div>`;
+  let cueHTML;
+  if (!cues.length) {
+    cueHTML = `<div class="card-cue"><div class="card-cue-label">First line — no cue</div></div>`;
+  } else {
+    const total = cues.length;
+    const lines = cues.map((c, i) => {
+      const isLast = i === total - 1;
+      // opacity ramps from ~0.38 (oldest) up to 1.0 (most recent)
+      const opa = total === 1 ? 1 : +(0.38 + (i / (total - 1)) * 0.62).toFixed(2);
+      return `<div class="cue-line${isLast ? ' cue-final' : ''}" style="opacity:${opa}">
+        <span class="cue-line-char">${esc(c.c)}</span>
+        <span class="cue-line-text">${nl2br(c.t)}</span>
+      </div>`;
+    }).join('');
+    cueHTML = `<div class="card-cue">
+      <div class="card-cue-label">Your cue</div>
+      <div class="cue-lines">${lines}</div>
+    </div>`;
+  }
 
   const cc = PLAYERS.m.chars.includes(l.c.toUpperCase()) ? 'cl-m' : 'cl-e';
   el.innerHTML = `<div class="line-card">
@@ -1248,11 +1402,30 @@ function renderQ() {
   quizAnswered = false;
   const l       = quizList[quizIdx];
   const origIdx = SCRIPT.indexOf(l);
-  let cue = null;
-  for (let j = origIdx-1; j >= 0; j--) { if (!SCRIPT[j].dir){ cue = SCRIPT[j]; break; } }
-  const cueHTML = cue
-    ? `<div class="quiz-cue-section"><div class="quiz-cue-label">Your cue</div><div class="quiz-cue-char">${esc(cue.c)}</div><div class="quiz-cue-text">${nl2br(cue.t)}</div></div>`
-    : `<div class="quiz-cue-section"><div class="quiz-cue-label" style="font-style:italic;">First line — no cue</div></div>`;
+
+  // Collect up to 5 preceding non-direction lines as cue context
+  const cues = [];
+  for (let j = origIdx - 1; j >= 0 && cues.length < 5; j--) {
+    if (!SCRIPT[j].dir) cues.unshift(SCRIPT[j]);
+  }
+  let cueHTML;
+  if (!cues.length) {
+    cueHTML = `<div class="quiz-cue-section"><div class="quiz-cue-label" style="font-style:italic;">First line — no cue</div></div>`;
+  } else {
+    const total = cues.length;
+    const lines = cues.map((c, i) => {
+      const isLast = i === total - 1;
+      const opa = total === 1 ? 1 : +(0.38 + (i / (total - 1)) * 0.62).toFixed(2);
+      return `<div class="cue-line${isLast ? ' cue-final' : ''}" style="opacity:${opa}">
+        <span class="cue-line-char">${esc(c.c)}</span>
+        <span class="cue-line-text">${nl2br(c.t)}</span>
+      </div>`;
+    }).join('');
+    cueHTML = `<div class="quiz-cue-section">
+      <div class="quiz-cue-label">Your cue</div>
+      <div class="cue-lines">${lines}</div>
+    </div>`;
+  }
 
   const icon = l.song ? '🎵 Song' : '💬 Dialogue';
   el.innerHTML = `<div class="quiz-card">
@@ -1318,15 +1491,27 @@ function rhInitVoices() {
   }
   function loadV() {
     RH.voices = window.speechSynthesis.getVoices();
-    // Try to find distinct male/female English voices
-    const enVoices = RH.voices.filter(v => v.lang.startsWith('en'));
-    RH.femaleVoice = enVoices.find(v => /female|samantha|victoria|karen|moira|tessa|zira|susan|fiona/i.test(v.name))
-                  || enVoices[0] || null;
-    RH.maleVoice   = enVoices.find(v => /male|daniel|alex|fred|albert|lee|arthur|oliver/i.test(v.name))
-                  || enVoices[enVoices.length-1] || null;
+    const en = RH.voices.filter(v => v.lang.startsWith('en'));
+
+    // Prioritise known natural-sounding named voices (cross-platform)
+    const PREF_FEMALE = ['Samantha','Joanna','Allison','Susan','Victoria',
+                         'Karen','Moira','Fiona','Tessa','Kate','Emma','Amy','Zira'];
+    const PREF_MALE   = ['Daniel','Alex','Oliver','Arthur','Thomas',
+                         'Lee','Aaron','David','Tom','Fred'];
+    const findVoice = (names) =>
+      names.reduce((found, n) => found || en.find(v => v.name.includes(n)), null);
+
+    RH.femaleVoice = findVoice(PREF_FEMALE)
+                  || en.find(v => /female/i.test(v.name))
+                  || en[0] || null;
+    RH.maleVoice   = findVoice(PREF_MALE)
+                  || en.find(v => /male/i.test(v.name))
+                  || (en.length > 1 ? en[en.length - 1] : en[0]) || null;
   }
   loadV();
-  window.speechSynthesis.onvoiceschanged = loadV;
+  if (window.speechSynthesis.onvoiceschanged !== undefined) {
+    window.speechSynthesis.onvoiceschanged = loadV;
+  }
 }
 
 function rhGetVoice(charName) {
